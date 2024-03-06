@@ -1,26 +1,36 @@
 let button = document.querySelectorAll('button');
 let userCounter = document.createElement('div');
 let computerCounter = document.createElement('div');
+let readyHeader = document.createElement('h2');
+let winnerText = document.createElement('div');
+let scoreboard = document.getElementsByClassName('scoreboard')[0];
 
 let userScore = 0;
 let computerScore = 0;
 
 function setUpGame() {
-  let winnerText = document.createElement('div');
+  let readySection = document.getElementsByClassName('readyText')[0];
+  let startSection = document.getElementsByClassName('startInformation')[0];
+  let winnerSection = document.getElementsByClassName('winnerSection')[0];
+
+  winnerText.textContent = 'First to 5 wins!';
+  if (!winnerSection.contains(winnerText)) {
+    winnerSection.appendChild(winnerText);
+  }
   userScore = 0;
   computerScore = 0;
 
-  userCounter.textContent = `User Score: ${userScore}`;
-  computerCounter.textContent = `Computer Score: ${computerScore}`;
-
-  if (!document.body.contains(winnerText)) {
-    document.body.appendChild(winnerText);
+  readyHeader.textContent = 'Ready?';
+  if (!readySection.contains(readyHeader)) {
+    readySection.appendChild(readyHeader);
   }
 
-  winnerText.textContent = '';
+  userCounter.textContent = `User Score: ${userScore}`;
+  computerCounter.textContent = `Computer Score: ${computerScore}`;
+  startSection.textContent = 'Tap on any button to start';
 
-  document.body.appendChild(userCounter);
-  document.body.appendChild(computerCounter);
+  scoreboard.appendChild(userCounter);
+  scoreboard.appendChild(computerCounter);
 }
 
 function getComputerChoice() {
@@ -70,20 +80,22 @@ function playRound(playerSelection, computerSelection) {
 }
 
 function playGame() {
-  let winnerText = document.createElement('div');
+  let winnerSection = document.getElementsByClassName('winnerSection')[0];
+
   button.forEach((btn) => {
     btn.addEventListener('click', function (e) {
       let computerSelection = getComputerChoice();
       const result = playRound(e.target.id, computerSelection);
       winnerText.textContent = result;
-      document.body.appendChild(winnerText);
+      console.log(winnerText);
+      winnerSection.appendChild(winnerText);
       if (userScore == 5) {
         alert('You Win!');
-        document.body.removeChild(winnerText);
+        winnerSection.removeChild(winnerText);
         setUpGame();
       } else if (computerScore == 5) {
         alert('You Lose!');
-        document.body.removeChild(winnerText);
+        winnerSection.removeChild(winnerText);
         setUpGame();
       }
     });
