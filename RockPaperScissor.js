@@ -87,7 +87,6 @@ function playGame() {
       let computerSelection = getComputerChoice();
       const result = playRound(e.target.id, computerSelection);
       winnerText.textContent = result;
-      console.log(winnerText);
       winnerSection.appendChild(winnerText);
       if (userScore == 5) {
         alert('You Win!');
